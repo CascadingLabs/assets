@@ -74,18 +74,33 @@ Assets/
 ├── qr-codes/
 │   ├── gen_qr.py             ← QR code generator script
 │   ├── cascadinglabs/
-│   │   ├── cascadinglabs.png
-│   │   └── cascadinglabs.svg
-│   ├── discord/
-│   ├── github/
+│   │   ├── cascadinglabs.{svg,png}
+│   │   ├── discord/discord.{svg,png}
+│   │   └── github/github.{svg,png}
 │   ├── qscrape/
+│   │   ├── qscrape.{svg,png}
+│   │   ├── discord/discord.{svg,png}
+│   │   └── github/github.{svg,png}
 │   └── yosoi/
+│       ├── yosoi.{svg,png}
+│       ├── discord/discord.{svg,png}
+│       └── github/github.{svg,png}
 ├── third-party/
 │   ├── discord.svg           ← simple-icons source
 │   └── github.svg
 ├── pyproject.toml
 └── uv.lock
 ```
+
+## Links
+
+Each project has a site, GitHub repo, and Discord invite. These are the URLs encoded in the QR codes.
+
+| Project | Site | GitHub | Discord |
+|---|---|---|---|
+| Cascading Labs | https://cascadinglabs.com | https://github.com/CascadingLabs | https://discord.gg/w6bVujKphH |
+| QScrape | https://qscrape.dev | https://github.com/CascadingLabs/QScrape | https://discord.gg/5WZNzFZtgb |
+| Yosoi | https://cascadinglabs.com/yosoi | https://github.com/CascadingLabs/Yosoi | https://discord.gg/YreV3CzxsE |
 
 ## Reproduction steps
 
@@ -125,7 +140,7 @@ cd Assets/qr-codes
 uv run gen_qr.py
 ```
 
-This produces PNG + SVG pairs in subdirectories (`cascadinglabs/`, `discord/`, `github/`, `qscrape/`, `yosoi/`).
+This produces PNG + SVG pairs in per-project subdirectories, each with 4 color variants (dark, light, mono-dark, mono-light). QR codes use dot-style data modules, rounded squircle finder patterns, and concentric circle alignment markers.
 
 ### 3. Add or modify a logo
 
