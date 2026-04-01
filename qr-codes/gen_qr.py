@@ -6,7 +6,7 @@
 #   "pillow>=10.0",
 # ]
 # ///
-"""Fancy on-brand QR code generator for Cascading Labs, QScrape, Yosoi, and VoidCrawl.
+"""Fancy on-brand QR code generator for Cascading Labs, QScrape, Yosoi, VoidCrawl, Assets, Yosoi Docs, and VoidCrawl Docs.
 
 Renders QR codes with:
   - Circle/dot data modules with spacing
@@ -35,8 +35,24 @@ OUT        = SCRIPT_DIR
 
 BRAND_VARIANTS: dict[str, dict[str, dict[str, str]]] = {
     "cascading-labs": {
-        "dark":       {"bg": "#0c2340", "fg": "#5ba4cf", "icon_bg": "#0c2340", "icon_fg": "#5ba4cf", "border": "#3d7eb5"},
-        "light":      {"bg": "#e8f0f8", "fg": "#2a5f8a", "icon_bg": "#e8f0f8", "icon_fg": "#1a4a72", "border": "#2a5f8a"},
+        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
+        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+    },
+    "assets": {
+        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
+        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
+        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
+        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+    },
+    "yosoi-docs": {
+        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
+        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
+        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
+        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+    },
+    "voidcrawl-docs": {
+        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
+        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
         "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
         "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
     },
@@ -60,11 +76,12 @@ BRAND_VARIANTS: dict[str, dict[str, dict[str, str]]] = {
     },
 }
 
-VARIANTS = ["dark", "light", "mono-dark", "mono-light"]
+VARIANTS_ALL  = ["dark", "light", "mono-dark", "mono-light"]
+VARIANTS_MONO = ["mono-dark", "mono-light"]
 
 # (output_dir, filename, URL, brand key, icon SVG relative to LOGOS_DIR or None → use brand logo)
 TARGETS: list[tuple[str, str, str, str, str | None]] = [
-    # Cascading Labs
+    # Cascading Labs (mono only)
     ("cascadinglabs",         "cascadinglabs", "https://cascadinglabs.com",                "cascading-labs", None),
     ("cascadinglabs/github",  "github",        "https://github.com/CascadingLabs",         "cascading-labs", "third-party/github.svg"),
     ("cascadinglabs/discord", "discord",       "https://discord.gg/w6bVujKphH",            "cascading-labs", "third-party/discord.svg"),
@@ -80,6 +97,17 @@ TARGETS: list[tuple[str, str, str, str, str | None]] = [
     ("voidcrawl",             "voidcrawl",     "https://cascadinglabs.com/voidcrawl/",         "voidcrawl",    None),
     ("voidcrawl/github",      "github",        "https://github.com/CascadingLabs/VoidCrawl",  "voidcrawl",    "third-party/github.svg"),
     ("voidcrawl/discord",     "discord",       "https://discord.gg/ftykDhmAQN",                "voidcrawl",    "third-party/discord.svg"),
+    # Assets
+    ("assets",                "assets",        "https://github.com/CascadingLabs/Assets",      "assets",       None),
+    ("assets/github",         "github",        "https://github.com/CascadingLabs/Assets",      "assets",       "third-party/github.svg"),
+    # Yosoi Docs
+    ("yosoi-docs",            "yosoi-docs",    "https://github.com/CascadingLabs/YosoiDocs",       "yosoi-docs",   None),
+    ("yosoi-docs/github",     "github",        "https://github.com/CascadingLabs/YosoiDocs",       "yosoi-docs",   "third-party/github.svg"),
+    ("yosoi-docs/discord",    "discord",       "https://discord.gg/c8MKEaWEEK",                    "yosoi-docs",   "third-party/discord.svg"),
+    # VoidCrawl Docs
+    ("voidcrawl-docs",            "voidcrawl-docs",    "https://github.com/CascadingLabs/VoidCrawlDocs",   "voidcrawl-docs",   None),
+    ("voidcrawl-docs/github",     "github",            "https://github.com/CascadingLabs/VoidCrawlDocs",   "voidcrawl-docs",   "third-party/github.svg"),
+    ("voidcrawl-docs/discord",    "discord",           "https://discord.gg/c8MKEaWEEK",                    "voidcrawl-docs",   "third-party/discord.svg"),
 ]
 
 MODULE_PX  = 20      # px per module in final PNG
@@ -416,12 +444,18 @@ def gen(out_path: str, filename: str, url: str, brand: str, icon_svg: str | None
     print(f"    {out_path}/{filename}{suffix}.png")
 
 
+def _variants_for_brand(brand: str) -> list[str]:
+    """Return the variant list for a brand (use its BRAND_VARIANTS keys)."""
+    return list(BRAND_VARIANTS[brand].keys())
+
+
 def main() -> None:
     total = 0
     for out_path, filename, url, brand, icon_svg in TARGETS:
         label = icon_svg or "brand logo"
+        variants = _variants_for_brand(brand)
         print(f"[{brand}] {out_path}/{filename}  ({label})")
-        for variant in VARIANTS:
+        for variant in variants:
             print(f"  {variant}:")
             gen(out_path, filename, url, brand, icon_svg, variant)
             total += 2

@@ -40,7 +40,7 @@
     --brand-text-marker: #555555;
     --brand-border: #2a2a2a;
 
-    /* ── Cascading Labs — dark blue ───────────────────── */
+    /* ── Cascading Labs — legacy -- dark blue ───────────────────── */
     --cl-bg: #0c2340;
     --cl-fg: #5ba4cf;
     --cl-border: #3d7eb5;
@@ -75,6 +75,15 @@
     --vc-accent-text: #b07adf;
     --vc-accent-pale: #d4bfef;
     --vc-link-hover-bg: color-mix(in srgb, #2d1a4e 15%, transparent);
+
+    /* ── Assets / Yosoi Docs / VoidCrawl Docs — cardboard/peach ── */
+    --util-bg: #2e2319;
+    --util-fg: #c4a882;
+    --util-border: #967b55;
+    --util-accent: #3d2a18;
+    --util-accent-text: #c4a882;
+    --util-accent-pale: #d9c4a8;
+    --util-link-hover-bg: color-mix(in srgb, #3d2a18 15%, transparent);
 
     /* ── Monochrome ───────────────────────────────────── */
     --mono-dark-bg: #141414;
@@ -152,6 +161,15 @@
     --vc-accent-pale: #e2d5f0;
     --vc-link-hover-bg: color-mix(in srgb, #2d1a4e 10%, transparent);
 
+    /* Assets / Yosoi Docs / VoidCrawl Docs — utility */
+    --util-bg: #f5e0c8;
+    --util-fg: #6b4828;
+    --util-border: #9b7348;
+    --util-accent: #3d2a18;
+    --util-accent-text: #5c3d20;
+    --util-accent-pale: #e8d0b4;
+    --util-link-hover-bg: color-mix(in srgb, #3d2a18 10%, transparent);
+
     /* Hero page (landing) — pure B&W, light mode */
     --hero-bg: #ffffff;
     --hero-fg: #0a0a0a;
@@ -214,6 +232,14 @@
         --vc-accent-text: #5a2d91;
         --vc-accent-pale: #e2d5f0;
         --vc-link-hover-bg: color-mix(in srgb, #2d1a4e 10%, transparent);
+
+        --util-bg: #f5e0c8;
+        --util-fg: #6b4828;
+        --util-border: #9b7348;
+        --util-accent: #3d2a18;
+        --util-accent-text: #5c3d20;
+        --util-accent-pale: #e8d0b4;
+        --util-link-hover-bg: color-mix(in srgb, #3d2a18 10%, transparent);
 
         --hero-bg: #ffffff;
         --hero-fg: #0a0a0a;

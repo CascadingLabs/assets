@@ -1,6 +1,21 @@
+<p align="center">
+  <a href="https://github.com/CascadingLabs/Assets">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="media/logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="media/logo-light.svg">
+      <img src="media/logo-dark.svg" alt="Assets" width="200">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://discord.gg/c8MKEaWEEK"><img src="https://img.shields.io/badge/Discord-Join-c4a882?labelColor=2e2319&logo=discord&logoColor=white" alt="Discord"></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-c4a882?labelColor=2e2319" alt="License"></a>
+</p>
+
 # Cascading Labs Brand Assets
 
-Visual identity assets for Cascading Labs and its projects: **QScrape**, **Yosoi**, and **VoidCrawl**.
+Visual identity assets for Cascading Labs and its projects: **QScrape**, **Yosoi**, **VoidCrawl**, **Assets**, **Yosoi Docs**, and **VoidCrawl Docs**.
 
 ## Design system
 
@@ -22,9 +37,9 @@ Every logo follows a **periodic table element tile** motif: a rounded rectangle 
 
 | Position | Content | Meaning |
 |---|---|---|
-| Top-left | Atomic number | A project-specific identifier. QScrape uses **404** (HTTP 404, the scraper's natural enemy). Cascading Labs uses **0** (the origin). Yosoi uses **3** (nod to the escalation tiers). VoidCrawl uses **401** (HTTP 401 Unauthorized). |
-| Top-right | Float value | A version or build signature rendered as a decimal. Cascading Labs: **24.26**, QScrape: **310.26**, Yosoi: **812.25**, VoidCrawl: **330.26**. Arbitrary but stable, like atomic mass. |
-| Center | Symbol | One or two characters from the project name, styled like a chemical symbol (leading uppercase, optional lowercase). **Qs** = QScrape, **Cl** = Cascading Labs, **Ys** = Yosoi, **Vc** = VoidCrawl. |
+| Top-left | Atomic number | A project-specific identifier. QScrape uses **404** (HTTP 404, the scraper's natural enemy). Cascading Labs uses **0** (the origin). Yosoi uses **3** (nod to the escalation tiers). VoidCrawl uses **401** (HTTP 401 Unauthorized). Assets uses **23**. Docs projects share the parent's number. |
+| Top-right | Float value | A version or build signature rendered as a decimal. Cascading Labs: **24.26**, QScrape: **310.26**, Yosoi: **812.25**, VoidCrawl: **330.26**, Assets: **329.26**. Docs projects share the parent's float. |
+| Center | Symbol | One or two characters from the project name, styled like a chemical symbol (leading uppercase, optional lowercase). **Cl** = Cascading Labs, **Qs** = QScrape, **Ys** = Yosoi, **Vc** = VoidCrawl, **As** = Assets, **Yd** = Yosoi Docs, **Vd** = VoidCrawl Docs. |
 | Below center | Name | The full project name in regular weight. |
 
 ### Double border
@@ -51,52 +66,64 @@ Each project has its own background + accent pair. Borders use a mid-tone betwee
 
 | Project | Background | Accent | Border |
 |---|---|---|---|
-| Cascading Labs | `#0c2340` | `#5ba4cf` | `#3d7eb5` |
+| Cascading Labs | monochrome only | `#ffffff` / `#000000` | `#ffffff` / `#000000` |
 | QScrape | `#1a0808` | `#ef6464` | `#c94040` |
 | Yosoi | `#2e3742` | `#c4d4df` | `#8fa3b3` |
 | VoidCrawl | `#120a24` | `#b07adf` | `#7c4dbd` |
+| Assets | `#2e2319` | `#c4a882` | `#c4a882` |
+| Yosoi Docs | `#2e2319` | `#c4a882` | `#c4a882` |
+| VoidCrawl Docs | `#2e2319` | `#c4a882` | `#c4a882` |
 
-Light-mode variants invert the relationship: pale tinted background with dark accent text. Monochrome variants use pure black (`#141414`) or off-white (`#f5f5f5`) backgrounds with white or black foregrounds.
+Cascading Labs uses monochrome variants only (no colored versions). Assets, Yosoi Docs, and VoidCrawl Docs share a cardboard/peach utility palette. Light-mode variants invert the relationship: pale tinted background with dark accent text. Monochrome variants use pure black (`#141414`) or off-white (`#f5f5f5`) backgrounds with white or black foregrounds.
 
 ## File structure
 
 ```
 Assets/
 ├── global.css              ← canonical brand design tokens (all projects)
-├── cascading-labs/
-│   ├── dark/logo.{svg,png,jpg}, favicon.ico
-│   ├── light/logo.{svg,png,jpg}, favicon.ico
+├── cascading-labs/                      ← monochrome only
 │   ├── mono-dark/logo.{svg,png,jpg}, favicon.ico
 │   ├── mono-light/logo.{svg,png,jpg}, favicon.ico
-│   └── no-lines/                       ← same variants without double border
-│       ├── dark/logo.{svg,png,jpg}, favicon.ico
-│       ├── light/logo.{svg,png,jpg}, favicon.ico
+│   └── no-lines/
 │       ├── mono-dark/logo.{svg,png,jpg}, favicon.ico
 │       └── mono-light/logo.{svg,png,jpg}, favicon.ico
 ├── qscrape/
-│   └── (same structure)
+│   └── (full structure: dark, light, mono-dark, mono-light + no-lines)
 ├── yosoi/
 │   └── (same structure)
 ├── voidcrawl/
 │   └── (same structure)
+├── assets/                              ← utility palette (cardboard/peach)
+│   └── (full structure)
+├── yosoi-docs/                          ← utility palette, symbol Yd
+│   └── (full structure)
+├── voidcrawl-docs/                      ← utility palette, symbol Vd
+│   └── (full structure)
 ├── qr-codes/
 │   ├── gen_qr.py             ← QR code generator script
-│   ├── cascadinglabs/
-│   │   ├── cascadinglabs.{svg,png}
-│   │   ├── discord/discord.{svg,png}
-│   │   └── github/github.{svg,png}
+│   ├── cascadinglabs/        ← mono variants only
+│   │   ├── cascadinglabs-{mono-dark,mono-light}.{svg,png}
+│   │   ├── discord/discord-{mono-dark,mono-light}.{svg,png}
+│   │   └── github/github-{mono-dark,mono-light}.{svg,png}
 │   ├── qscrape/
-│   │   ├── qscrape.{svg,png}
+│   │   ├── qscrape.{svg,png} (4 variants)
 │   │   ├── discord/discord.{svg,png}
 │   │   └── github/github.{svg,png}
 │   ├── yosoi/
-│   │   ├── yosoi.{svg,png}
-│   │   ├── discord/discord.{svg,png}
+│   │   └── (same structure)
+│   ├── voidcrawl/
+│   │   └── (same structure)
+│   ├── assets/
+│   │   ├── assets.{svg,png} (4 variants)
 │   │   └── github/github.{svg,png}
-│   └── voidcrawl/
-│       ├── voidcrawl.{svg,png}
-│       ├── discord/discord.{svg,png}
-│       └── github/github.{svg,png}
+│   ├── yosoi-docs/
+│   │   ├── yosoi-docs.{svg,png} (4 variants)
+│   │   ├── github/github.{svg,png}
+│   │   └── discord/discord.{svg,png}
+│   └── voidcrawl-docs/
+│       ├── voidcrawl-docs.{svg,png} (4 variants)
+│       ├── github/github.{svg,png}
+│       └── discord/discord.{svg,png}
 ├── third-party/
 │   ├── discord.svg           ← simple-icons source
 │   └── github.svg
@@ -114,6 +141,9 @@ URLs encoded in the QR codes.
 | QScrape | https://qscrape.dev | https://github.com/CascadingLabs/QScrape | https://discord.gg/5WZNzFZtgb |
 | Yosoi | https://cascadinglabs.com/yosoi | https://github.com/CascadingLabs/Yosoi | https://discord.gg/YreV3CzxsE |
 | VoidCrawl | https://cascadinglabs.com/voidcrawl/ | https://github.com/CascadingLabs/VoidCrawl | https://discord.gg/ftykDhmAQN |
+| Assets | — | https://github.com/CascadingLabs/Assets | — |
+| Yosoi Docs | — | https://github.com/CascadingLabs/YosoiDocs | https://discord.gg/c8MKEaWEEK |
+| VoidCrawl Docs | — | https://github.com/CascadingLabs/VoidCrawlDocs | https://discord.gg/c8MKEaWEEK |
 
 ## Reproduction steps
 
@@ -132,7 +162,23 @@ Each project directory contains SVG source files. To re-export all raster varian
 ```bash
 cd Assets
 
-for project in qscrape cascading-labs yosoi voidcrawl; do
+# Cascading Labs — mono only
+for scheme in mono-dark mono-light; do
+  for dir in cascading-labs/$scheme cascading-labs/no-lines/$scheme; do
+    svg="$dir/logo.svg"
+    [ -f "$svg" ] || continue
+    inkscape "$svg" \
+      --export-type=png \
+      --export-filename="$dir/logo.png" \
+      --export-width=512 --export-height=512
+    magick "$dir/logo.png" -quality 90 "$dir/logo.jpg"
+    magick "$dir/logo.png" -resize 256x256 \
+      -define icon:auto-resize=256,128,64,48,32,16 "$dir/favicon.ico"
+  done
+done
+
+# All other projects — full color + mono variants
+for project in qscrape yosoi voidcrawl assets yosoi-docs voidcrawl-docs; do
   for scheme in dark light mono-dark mono-light; do
     svg="$project/$scheme/logo.svg"
     [ -f "$svg" ] || continue
