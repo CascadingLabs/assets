@@ -263,3 +263,7 @@ To create a new project logo, copy this template and fill in the values:
 ```
 
 Replace `BACKGROUND`, `BORDER`, `ACCENT`, `NUMBER`, `FLOAT`, `SYMBOL`, and `PROJECT NAME` with your values.
+
+## Contact
+
+[contact@cascadinglabs.com](mailto:contact@cascadinglabs.com)
