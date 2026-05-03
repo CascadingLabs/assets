@@ -28,126 +28,468 @@ import segno
 from PIL import Image
 
 SCRIPT_DIR = Path(__file__).parent
-LOGOS_DIR  = SCRIPT_DIR.parent
-OUT        = SCRIPT_DIR
+LOGOS_DIR = SCRIPT_DIR.parent
+OUT = SCRIPT_DIR
 
 # --- Brand color schemes per variant ---
 
 BRAND_VARIANTS: dict[str, dict[str, dict[str, str]]] = {
     "cascading-labs": {
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "assets": {
-        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
-        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#2e2319",
+            "fg": "#c4a882",
+            "icon_bg": "#2e2319",
+            "icon_fg": "#c4a882",
+            "border": "#967b55",
+        },
+        "light": {
+            "bg": "#f5e0c8",
+            "fg": "#6b4828",
+            "icon_bg": "#f5e0c8",
+            "icon_fg": "#6b4828",
+            "border": "#9b7348",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "yosoi-docs": {
-        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
-        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#2e2319",
+            "fg": "#c4a882",
+            "icon_bg": "#2e2319",
+            "icon_fg": "#c4a882",
+            "border": "#967b55",
+        },
+        "light": {
+            "bg": "#f5e0c8",
+            "fg": "#6b4828",
+            "icon_bg": "#f5e0c8",
+            "icon_fg": "#6b4828",
+            "border": "#9b7348",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "voidcrawl-docs": {
-        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
-        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#2e2319",
+            "fg": "#c4a882",
+            "icon_bg": "#2e2319",
+            "icon_fg": "#c4a882",
+            "border": "#967b55",
+        },
+        "light": {
+            "bg": "#f5e0c8",
+            "fg": "#6b4828",
+            "icon_bg": "#f5e0c8",
+            "icon_fg": "#6b4828",
+            "border": "#9b7348",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "qscrape": {
-        "dark":       {"bg": "#1a0808", "fg": "#ef6464", "icon_bg": "#1a0808", "icon_fg": "#ef6464", "border": "#c94040"},
-        "light":      {"bg": "#faf0f0", "fg": "#8b1a1a", "icon_bg": "#faf0f0", "icon_fg": "#a52a2a", "border": "#c94040"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#1a0808",
+            "fg": "#ef6464",
+            "icon_bg": "#1a0808",
+            "icon_fg": "#ef6464",
+            "border": "#c94040",
+        },
+        "light": {
+            "bg": "#faf0f0",
+            "fg": "#8b1a1a",
+            "icon_bg": "#faf0f0",
+            "icon_fg": "#a52a2a",
+            "border": "#c94040",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "yosoi": {
-        "dark":       {"bg": "#2e3742", "fg": "#c4d4df", "icon_bg": "#2e3742", "icon_fg": "#c4d4df", "border": "#8fa3b3"},
-        "light":      {"bg": "#e8ecf0", "fg": "#3a4855", "icon_bg": "#e8ecf0", "icon_fg": "#3a4855", "border": "#5a6e7e"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#2e3742",
+            "fg": "#c4d4df",
+            "icon_bg": "#2e3742",
+            "icon_fg": "#c4d4df",
+            "border": "#8fa3b3",
+        },
+        "light": {
+            "bg": "#e8ecf0",
+            "fg": "#3a4855",
+            "icon_bg": "#e8ecf0",
+            "icon_fg": "#3a4855",
+            "border": "#5a6e7e",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "voidcrawl": {
-        "dark":       {"bg": "#120a24", "fg": "#b07adf", "icon_bg": "#120a24", "icon_fg": "#b07adf", "border": "#7c4dbd"},
-        "light":      {"bg": "#f0eaf8", "fg": "#4a2080", "icon_bg": "#f0eaf8", "icon_fg": "#4a2080", "border": "#6b3fa0"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#120a24",
+            "fg": "#b07adf",
+            "icon_bg": "#120a24",
+            "icon_fg": "#b07adf",
+            "border": "#7c4dbd",
+        },
+        "light": {
+            "bg": "#f0eaf8",
+            "fg": "#4a2080",
+            "icon_bg": "#f0eaf8",
+            "icon_fg": "#4a2080",
+            "border": "#6b3fa0",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "cl-workstation": {
-        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
-        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#2e2319",
+            "fg": "#c4a882",
+            "icon_bg": "#2e2319",
+            "icon_fg": "#c4a882",
+            "border": "#967b55",
+        },
+        "light": {
+            "bg": "#f5e0c8",
+            "fg": "#6b4828",
+            "icon_bg": "#f5e0c8",
+            "icon_fg": "#6b4828",
+            "border": "#9b7348",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
     "cl-template": {
-        "dark":       {"bg": "#2e2319", "fg": "#c4a882", "icon_bg": "#2e2319", "icon_fg": "#c4a882", "border": "#967b55"},
-        "light":      {"bg": "#f5e0c8", "fg": "#6b4828", "icon_bg": "#f5e0c8", "icon_fg": "#6b4828", "border": "#9b7348"},
-        "mono-dark":  {"bg": "#141414", "fg": "#ffffff", "icon_bg": "#141414", "icon_fg": "#ffffff", "border": "#ffffff"},
-        "mono-light": {"bg": "#f5f5f5", "fg": "#000000", "icon_bg": "#f5f5f5", "icon_fg": "#000000", "border": "#000000"},
+        "dark": {
+            "bg": "#2e2319",
+            "fg": "#c4a882",
+            "icon_bg": "#2e2319",
+            "icon_fg": "#c4a882",
+            "border": "#967b55",
+        },
+        "light": {
+            "bg": "#f5e0c8",
+            "fg": "#6b4828",
+            "icon_bg": "#f5e0c8",
+            "icon_fg": "#6b4828",
+            "border": "#9b7348",
+        },
+        "mono-dark": {
+            "bg": "#141414",
+            "fg": "#ffffff",
+            "icon_bg": "#141414",
+            "icon_fg": "#ffffff",
+            "border": "#ffffff",
+        },
+        "mono-light": {
+            "bg": "#f5f5f5",
+            "fg": "#000000",
+            "icon_bg": "#f5f5f5",
+            "icon_fg": "#000000",
+            "border": "#000000",
+        },
     },
 }
 
-VARIANTS_ALL  = ["dark", "light", "mono-dark", "mono-light"]
+VARIANTS_ALL = ["dark", "light", "mono-dark", "mono-light"]
 VARIANTS_MONO = ["mono-dark", "mono-light"]
 
 # (output_dir, filename, URL, brand key, icon SVG relative to LOGOS_DIR or None → use brand logo)
 TARGETS: list[tuple[str, str, str, str, str | None]] = [
     # Cascading Labs (mono only)
-    ("cascadinglabs",         "cascadinglabs", "https://cascadinglabs.com",                "cascading-labs", None),
-    ("cascadinglabs/github",  "github",        "https://github.com/CascadingLabs",         "cascading-labs", "third-party/github.svg"),
-    ("cascadinglabs/discord", "discord",       "https://discord.gg/w6bVujKphH",            "cascading-labs", "third-party/discord.svg"),
+    (
+        "cascadinglabs",
+        "cascadinglabs",
+        "https://cascadinglabs.com",
+        "cascading-labs",
+        None,
+    ),
+    (
+        "cascadinglabs/github",
+        "github",
+        "https://github.com/CascadingLabs",
+        "cascading-labs",
+        "third-party/github.svg",
+    ),
+    (
+        "cascadinglabs/discord",
+        "discord",
+        "https://discord.gg/w6bVujKphH",
+        "cascading-labs",
+        "third-party/discord.svg",
+    ),
     # QScrape
-    ("qscrape",               "qscrape",       "https://qscrape.dev",                      "qscrape",        None),
-    ("qscrape/github",        "github",        "https://github.com/CascadingLabs/QScrape", "qscrape",        "third-party/github.svg"),
-    ("qscrape/discord",       "discord",       "https://discord.gg/5WZNzFZtgb",            "qscrape",        "third-party/discord.svg"),
+    ("qscrape", "qscrape", "https://qscrape.dev", "qscrape", None),
+    (
+        "qscrape/github",
+        "github",
+        "https://github.com/CascadingLabs/QScrape",
+        "qscrape",
+        "third-party/github.svg",
+    ),
+    (
+        "qscrape/discord",
+        "discord",
+        "https://discord.gg/5WZNzFZtgb",
+        "qscrape",
+        "third-party/discord.svg",
+    ),
     # Yosoi
-    ("yosoi",                 "yosoi",         "https://cascadinglabs.com/yosoi",           "yosoi",          None),
-    ("yosoi/github",          "github",        "https://github.com/CascadingLabs/Yosoi",   "yosoi",          "third-party/github.svg"),
-    ("yosoi/discord",         "discord",       "https://discord.gg/YreV3CzxsE",            "yosoi",          "third-party/discord.svg"),
+    ("yosoi", "yosoi", "https://cascadinglabs.com/yosoi", "yosoi", None),
+    (
+        "yosoi/github",
+        "github",
+        "https://github.com/CascadingLabs/Yosoi",
+        "yosoi",
+        "third-party/github.svg",
+    ),
+    (
+        "yosoi/discord",
+        "discord",
+        "https://discord.gg/YreV3CzxsE",
+        "yosoi",
+        "third-party/discord.svg",
+    ),
     # VoidCrawl
-    ("voidcrawl",             "voidcrawl",     "https://cascadinglabs.com/voidcrawl/",         "voidcrawl",    None),
-    ("voidcrawl/github",      "github",        "https://github.com/CascadingLabs/VoidCrawl",  "voidcrawl",    "third-party/github.svg"),
-    ("voidcrawl/discord",     "discord",       "https://discord.gg/ftykDhmAQN",                "voidcrawl",    "third-party/discord.svg"),
+    (
+        "voidcrawl",
+        "voidcrawl",
+        "https://cascadinglabs.com/voidcrawl/",
+        "voidcrawl",
+        None,
+    ),
+    (
+        "voidcrawl/github",
+        "github",
+        "https://github.com/CascadingLabs/VoidCrawl",
+        "voidcrawl",
+        "third-party/github.svg",
+    ),
+    (
+        "voidcrawl/discord",
+        "discord",
+        "https://discord.gg/ftykDhmAQN",
+        "voidcrawl",
+        "third-party/discord.svg",
+    ),
     # Assets
-    ("assets",                "assets",        "https://github.com/CascadingLabs/Assets",      "assets",       None),
-    ("assets/github",         "github",        "https://github.com/CascadingLabs/Assets",      "assets",       "third-party/github.svg"),
+    ("assets", "assets", "https://github.com/CascadingLabs/Assets", "assets", None),
+    (
+        "assets/github",
+        "github",
+        "https://github.com/CascadingLabs/Assets",
+        "assets",
+        "third-party/github.svg",
+    ),
     # Yosoi Docs
-    ("yosoi-docs",            "yosoi-docs",    "https://github.com/CascadingLabs/YosoiDocs",       "yosoi-docs",   None),
-    ("yosoi-docs/github",     "github",        "https://github.com/CascadingLabs/YosoiDocs",       "yosoi-docs",   "third-party/github.svg"),
-    ("yosoi-docs/discord",    "discord",       "https://discord.gg/c8MKEaWEEK",                    "yosoi-docs",   "third-party/discord.svg"),
+    (
+        "yosoi-docs",
+        "yosoi-docs",
+        "https://github.com/CascadingLabs/YosoiDocs",
+        "yosoi-docs",
+        None,
+    ),
+    (
+        "yosoi-docs/github",
+        "github",
+        "https://github.com/CascadingLabs/YosoiDocs",
+        "yosoi-docs",
+        "third-party/github.svg",
+    ),
+    (
+        "yosoi-docs/discord",
+        "discord",
+        "https://discord.gg/c8MKEaWEEK",
+        "yosoi-docs",
+        "third-party/discord.svg",
+    ),
     # VoidCrawl Docs
-    ("voidcrawl-docs",            "voidcrawl-docs",    "https://github.com/CascadingLabs/VoidCrawlDocs",   "voidcrawl-docs",   None),
-    ("voidcrawl-docs/github",     "github",            "https://github.com/CascadingLabs/VoidCrawlDocs",   "voidcrawl-docs",   "third-party/github.svg"),
-    ("voidcrawl-docs/discord",    "discord",           "https://discord.gg/c8MKEaWEEK",                    "voidcrawl-docs",   "third-party/discord.svg"),
+    (
+        "voidcrawl-docs",
+        "voidcrawl-docs",
+        "https://github.com/CascadingLabs/VoidCrawlDocs",
+        "voidcrawl-docs",
+        None,
+    ),
+    (
+        "voidcrawl-docs/github",
+        "github",
+        "https://github.com/CascadingLabs/VoidCrawlDocs",
+        "voidcrawl-docs",
+        "third-party/github.svg",
+    ),
+    (
+        "voidcrawl-docs/discord",
+        "discord",
+        "https://discord.gg/c8MKEaWEEK",
+        "voidcrawl-docs",
+        "third-party/discord.svg",
+    ),
     # CLWorkstation
-    ("cl-workstation",            "cl-workstation",    "https://github.com/CascadingLabs/CLWorkstation",   "cl-workstation",   None),
-    ("cl-workstation/github",     "github",            "https://github.com/CascadingLabs/CLWorkstation",   "cl-workstation",   "third-party/github.svg"),
-    ("cl-workstation/discord",    "discord",           "https://discord.gg/c8MKEaWEEK",                    "cl-workstation",   "third-party/discord.svg"),
+    (
+        "cl-workstation",
+        "cl-workstation",
+        "https://github.com/CascadingLabs/CLWorkstation",
+        "cl-workstation",
+        None,
+    ),
+    (
+        "cl-workstation/github",
+        "github",
+        "https://github.com/CascadingLabs/CLWorkstation",
+        "cl-workstation",
+        "third-party/github.svg",
+    ),
+    (
+        "cl-workstation/discord",
+        "discord",
+        "https://discord.gg/c8MKEaWEEK",
+        "cl-workstation",
+        "third-party/discord.svg",
+    ),
     # CLTemplate
-    ("cl-template",               "cl-template",       "https://github.com/CascadingLabs/CLTemplate",      "cl-template",      None),
-    ("cl-template/github",        "github",            "https://github.com/CascadingLabs/CLTemplate",      "cl-template",      "third-party/github.svg"),
-    ("cl-template/discord",       "discord",           "https://discord.gg/c8MKEaWEEK",                    "cl-template",      "third-party/discord.svg"),
+    (
+        "cl-template",
+        "cl-template",
+        "https://github.com/CascadingLabs/CLTemplate",
+        "cl-template",
+        None,
+    ),
+    (
+        "cl-template/github",
+        "github",
+        "https://github.com/CascadingLabs/CLTemplate",
+        "cl-template",
+        "third-party/github.svg",
+    ),
+    (
+        "cl-template/discord",
+        "discord",
+        "https://discord.gg/c8MKEaWEEK",
+        "cl-template",
+        "third-party/discord.svg",
+    ),
 ]
 
-MODULE_PX  = 20      # px per module in final PNG
-SVG_SCALE  = 10      # SVG user units per module
-DOT_RATIO  = 0.80    # dot diameter as fraction of module size
-LOGO_RATIO = 0.25    # logo occupies 25% of QR width
-ICON_SIZE  = 500     # px for rendered third-party icons
-QUIET_ZONE = 4       # modules of quiet zone around QR
+MODULE_PX = 20  # px per module in final PNG
+SVG_SCALE = 10  # SVG user units per module
+DOT_RATIO = 0.80  # dot diameter as fraction of module size
+LOGO_RATIO = 0.25  # logo occupies 25% of QR width
+ICON_SIZE = 500  # px for rendered third-party icons
+QUIET_ZONE = 4  # modules of quiet zone around QR
 
 # Alignment pattern positions from the QR spec (version -> list of row/col positions)
 ALIGNMENT_POSITIONS: dict[int, list[int]] = {
-    1:  [],
-    2:  [6, 18],
-    3:  [6, 22],
-    4:  [6, 26],
-    5:  [6, 30],
-    6:  [6, 34],
-    7:  [6, 22, 38],
-    8:  [6, 24, 42],
-    9:  [6, 26, 46],
+    1: [],
+    2: [6, 18],
+    3: [6, 22],
+    4: [6, 26],
+    5: [6, 30],
+    6: [6, 34],
+    7: [6, 22, 38],
+    8: [6, 24, 42],
+    9: [6, 26, 46],
     10: [6, 28, 50],
     11: [6, 30, 54],
     12: [6, 32, 58],
@@ -201,9 +543,9 @@ def _finder_clear_regions(n: int) -> list[tuple[int, int, int, int]]:
     """Return (r, c, h, w) rects that cover each finder + its separator.
     These are the areas we'll blank before drawing custom finders."""
     return [
-        (0, 0, 8, 8),              # top-left: finder 7x7 + separator right & bottom
-        (0, n - 8, 8, 8),          # top-right: finder + separator left & bottom
-        (n - 8, 0, 8, 8),          # bottom-left: finder + separator right & top
+        (0, 0, 8, 8),  # top-left: finder 7x7 + separator right & bottom
+        (0, n - 8, 8, 8),  # top-right: finder + separator left & bottom
+        (n - 8, 0, 8, 8),  # bottom-left: finder + separator right & top
     ]
 
 
@@ -216,11 +558,11 @@ def _alignment_centers(version: int, n: int) -> list[tuple[int, int]]:
     for r in positions:
         for c in positions:
             # Skip if overlapping with finder patterns + separators
-            if r <= 8 and c <= 8:           # top-left
+            if r <= 8 and c <= 8:  # top-left
                 continue
-            if r <= 8 and c >= n - 8:       # top-right
+            if r <= 8 and c >= n - 8:  # top-right
                 continue
-            if r >= n - 8 and c <= 8:       # bottom-left
+            if r >= n - 8 and c <= 8:  # bottom-left
                 continue
             centers.append((r, c))
     return centers
@@ -233,8 +575,7 @@ def _render_finder_svg(x: float, y: float, s: float, fg: str, bg: str) -> str:
     parts = []
     # Outer rounded rect
     parts.append(
-        f'<rect x="{x}" y="{y}" width="{size}" height="{size}" '
-        f'rx="{rx}" fill="{fg}"/>'
+        f'<rect x="{x}" y="{y}" width="{size}" height="{size}" rx="{rx}" fill="{fg}"/>'
     )
     # Inner bg ring (5x5)
     inner = 5 * s
@@ -331,16 +672,14 @@ def _build_fancy_svg(
             if matrix[r][c] & 1:  # dark module (check bit 0)
                 cx = offset + c * s + s / 2
                 cy = offset + r * s + s / 2
-                parts.append(
-                    f'  <circle cx="{cx}" cy="{cy}" r="{dot_r}" fill="{fg}"/>'
-                )
+                parts.append(f'  <circle cx="{cx}" cy="{cy}" r="{dot_r}" fill="{fg}"/>')
 
     # --- Finder patterns: clear area then draw custom ---
     finder_origins = [(0, 0), (0, n - 7), (n - 7, 0)]
     for r0, c0 in finder_origins:
-        parts.append("  " + _render_finder_svg(
-            offset + c0 * s, offset + r0 * s, s, fg, bg
-        ))
+        parts.append(
+            "  " + _render_finder_svg(offset + c0 * s, offset + r0 * s, s, fg, bg)
+        )
 
     # --- Alignment patterns: clear area then draw custom ---
     for cr, cc in align_centers:
@@ -365,6 +704,7 @@ def _build_fancy_svg(
 
 
 # --- Logo loading ---
+
 
 def _brand_logo_png(brand: str, variant: str) -> Image.Image | None:
     p = LOGOS_DIR / brand / variant / "logo.png"
@@ -407,7 +747,9 @@ def _third_party_icon_png(svg_rel: str, brand: str, variant: str) -> Image.Image
         capture_output=True,
     )
     if result.returncode != 0:
-        print(f"    WARNING: rsvg-convert failed for {svg_rel} ({variant}): {result.stderr.decode().strip()}")
+        print(
+            f"    WARNING: rsvg-convert failed for {svg_rel} ({variant}): {result.stderr.decode().strip()}"
+        )
         return None
     return Image.open(io.BytesIO(result.stdout)).convert("RGBA")
 
@@ -440,7 +782,14 @@ def _svg_to_png(svg_text: str, width: int) -> Image.Image:
     return Image.open(io.BytesIO(result.stdout)).convert("RGBA")
 
 
-def gen(out_path: str, filename: str, url: str, brand: str, icon_svg: str | None, variant: str) -> None:
+def gen(
+    out_path: str,
+    filename: str,
+    url: str,
+    brand: str,
+    icon_svg: str | None,
+    variant: str,
+) -> None:
     cfg = BRAND_VARIANTS[brand][variant]
     qr = _make_qr(url)
 
